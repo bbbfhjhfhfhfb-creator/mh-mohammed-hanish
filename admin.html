@@ -1,0 +1,324 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>لوحة التحكم | MH</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: #080808;
+      color: #f5f5f5; font-family: Tahoma, Arial, sans-serif;
+    }
+    header {
+      padding: 22px; text-align: center;
+      border-bottom: 1px solid #aa8740;
+    }
+    h1, h2 { color: #d7b46b; }
+    main { max-width: 1000px; margin: 30px auto; padding: 16px; }
+    .panel {
+      background: #171717; padding: 24px;
+      border: 1px solid #42351f; border-radius: 15px;
+      margin-bottom: 22px;
+    }
+    input, select, button {
+      width: 100%; padding: 13px; margin: 8px 0;
+      border-radius: 8px; font-size: 15px;
+    }
+    input, select {
+      background: #242424; color: white;
+      border: 1px solid #555;
+    }
+    button {
+      background: #c6a25c; color: #111;
+      border: 0; font-weight: bold; cursor: pointer;
+    }
+    button:disabled { opacity: .5; cursor: wait; }
+    .secondary { background: #333; color: white; }
+    .danger { background: #a63a3a; color: white; }
+    .hidden { display: none !important; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .item {
+      background: #222; border-radius: 12px;
+      padding: 12px; overflow: hidden;
+      overflow-wrap: anywhere;
+    }
+    .item img, .item video {
+      width: 100%; height: 180px;
+      object-fit: contain; background: #000;
+    }
+    .item p { font-size: 13px; }
+    #status { color: #e8c77f; white-space: pre-wrap; }
+    a { color: #d7b46b; }
+  </style>
+</head>
+<body>
+<header>
+  <h1>MH | Mohammed Hanish</h1>
+  <p>لوحة إدارة الأعمال والصور والفيديوهات</p>
+</header>
+
+<main>
+  <section id="loginPanel" class="panel">
+    <h2>تسجيل دخول المدير</h2>
+    <form id="loginForm">
+      <input id="email" type="email"
+             placeholder="البريد الإلكتروني" required>
+      <input id="password" type="password"
+             placeholder="كلمة المرور" required>
+      <button type="submit">تسجيل الدخول</button>
+    </form>
+  </section>
+
+  <section id="dashboard" class="hidden">
+    <div class="panel">
+      <h2>مرحباً بك في لوحة التحكم</h2>
+      <p id="adminEmail"></p>
+      <button id="logout" class="secondary">تسجيل الخروج</button>
+    </div>
+
+    <div class="panel">
+      <h2>إضافة صورة أو فيديو</h2>
+      <form id="uploadForm">
+        <input id="file" type="file"
+               accept="image/*,video/*" required>
+        <select id="category">
+          <option value="cinematic">أعمال سينمائية</option>
+          <option value="photography">تصوير فوتوغرافي</option>
+          <option value="events">تغطيات ومناسبات</option>
+          <option value="editing">مونتاج</option>
+        </select>
+        <button id="uploadButton" type="submit">
+          رفع الملف
+        </button>
+      </form>
+      <p>يمكنك رفع الصور والفيديوهات إلى مساحة التخزين.</p>
+    </div>
+
+    <div class="panel">
+      <h2>الملفات المرفوعة</h2>
+      <button id="refresh" class="secondary">
+        تحديث القائمة
+      </button>
+      <div id="files" class="grid"></div>
+    </div>
+  </section>
+
+  <p id="status" role="status"></p>
+  <p><a href="./index.html">العودة إلى الموقع</a></p>
+</main>
+
+<script>
+const SUPABASE_URL =
+  "https://ikbvhhcgyjgpkqvhycef.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_zvqvMUEX-Hv-WIjUhiaqMA_8SaPv7SH";
+
+const ADMIN_UID = "662c8c24-8825-48b7-8070-5aff094af2f8";
+const BUCKET = "MH-WORKS";
+
+const db = window.supabase.createClient(
+  SUPABASE_URL, SUPABASE_KEY
+);
+
+const $ = id => document.getElementById(id);
+
+function message(text) {
+  $("status").textContent = text;
+}
+
+function safeName(name) {
+  return name.replace(/[^a-zA-Z0-9._-]/g, "_");
+}
+
+async function checkLogin() {
+  const { data, error } = await db.auth.getUser();
+  const user = error ? null : data.user;
+  const isAdmin = user && user.id === ADMIN_UID;
+
+  $("loginPanel").classList.toggle("hidden", !!isAdmin);
+  $("dashboard").classList.toggle("hidden", !isAdmin);
+
+  if (isAdmin) {
+    $("adminEmail").textContent = user.email || "";
+    await loadFiles();
+  } else if (user) {
+    message("هذا الحساب لا يملك صلاحيات المدير.");
+    await db.auth.signOut();
+  }
+}
+
+$("loginForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  message("جارٍ تسجيل الدخول...");
+
+  const { error } = await db.auth.signInWithPassword({
+    email: $("email").value.trim(),
+    password: $("password").value
+  });
+
+  $("password").value = "";
+
+  if (error) {
+    message("فشل تسجيل الدخول: " + error.message);
+    return;
+  }
+
+  message("تم تسجيل الدخول.");
+  await checkLogin();
+});
+
+$("logout").addEventListener("click", async () => {
+  await db.auth.signOut();
+  $("files").replaceChildren();
+  message("تم تسجيل الخروج.");
+  await checkLogin();
+});
+
+$("uploadForm").addEventListener("submit", async event => {
+  event.preventDefault();
+
+  const file = $("file").files[0];
+  if (!file) return;
+
+  if (!file.type.startsWith("image/") &&
+      !file.type.startsWith("video/")) {
+    message("اختر صورة أو فيديو فقط.");
+    return;
+  }
+
+  const category = $("category").value;
+  const path = category + "/" +
+    crypto.randomUUID() + "-" + safeName(file.name);
+
+  $("uploadButton").disabled = true;
+  message("جارٍ رفع الملف، يرجى الانتظار...");
+
+  try {
+    const { error } = await db.storage
+      .from(BUCKET)
+      .upload(path, file, {
+        contentType: file.type,
+        upsert: false
+      });
+
+    if (error) throw error;
+
+    $("uploadForm").reset();
+    message("تم رفع الملف بنجاح.");
+    await loadFiles();
+  } catch (error) {
+    message("تعذر الرفع: " + error.message);
+  } finally {
+    $("uploadButton").disabled = false;
+  }
+});
+
+async function loadFiles() {
+  const root = $("files");
+  root.replaceChildren();
+  message("جارٍ تحميل الملفات...");
+
+  const categories = [
+    "cinematic", "photography", "events", "editing"
+  ];
+
+  let count = 0;
+
+  for (const category of categories) {
+    const { data, error } = await db.storage
+      .from(BUCKET)
+      .list(category, { limit: 100 });
+
+    if (error) {
+      message("خطأ في قراءة الملفات: " + error.message);
+      return;
+    }
+
+    for (const file of data || []) {
+      if (!file.id) continue;
+
+      count++;
+      const path = category + "/" + file.name;
+      const url = db.storage
+        .from(BUCKET).getPublicUrl(path).data.publicUrl;
+
+      const card = document.createElement("div");
+      card.className = "item";
+
+      const ext = file.name.split(".").pop().toLowerCase();
+      const videos = ["mp4", "webm", "mov", "m4v"];
+
+      let media;
+
+      if (videos.includes(ext)) {
+        media = document.createElement("video");
+        media.controls = true;
+        media.preload = "metadata";
+      } else {
+        media = document.createElement("img");
+        media.alt = file.name;
+        media.loading = "lazy";
+      }
+
+      media.src = url;
+      card.appendChild(media);
+
+      const name = document.createElement("p");
+      name.textContent = file.name;
+      card.appendChild(name);
+
+      const group = document.createElement("p");
+      group.textContent = "القسم: " + category;
+      card.appendChild(group);
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = "فتح الملف";
+      card.appendChild(link);
+
+      const remove = document.createElement("button");
+      remove.className = "danger";
+      remove.textContent = "حذف الملف";
+
+      remove.addEventListener("click", async () => {
+        if (!confirm("هل تريد حذف هذا الملف نهائياً؟")) {
+          return;
+        }
+
+        remove.disabled = true;
+
+        const { error } = await db.storage
+          .from(BUCKET).remove([path]);
+
+        if (error) {
+          message("فشل الحذف: " + error.message);
+          remove.disabled = false;
+        } else {
+          message("تم حذف الملف.");
+          await loadFiles();
+        }
+      });
+
+      card.appendChild(remove);
+      root.appendChild(card);
+    }
+  }
+
+  message("عدد الملفات المعروضة: " + count);
+}
+
+$("refresh").addEventListener("click", loadFiles);
+checkLogin();
+</script>
+</body>
+</html>
