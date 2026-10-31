@@ -10,7 +10,7 @@
 </head>
 <body>
 <header class="header">
-  <a class="brand" href="#home">
+  <a class="brand" href="#home" id="admin-logo">
     <img src="assets/logo.png" alt="شعار MH" class="logo">
     <span class="brand-text"><strong>Mohammed Hanish</strong><b>محمد حنش</b><small>MH · FREELANCE FILMMAKER & VIDEO CREATOR</small></span>
   </a>
@@ -131,5 +131,32 @@
 </main>
 <footer><a class="footer-brand" href="#home"><img src="assets/logo.png" alt=""> <span>Mohammed Hanish | محمد حنش</span></a><p>© <span id="year"></span> جميع الحقوق محفوظة</p><a href="#home">العودة للأعلى ↑</a></footer>
 <script src="script.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const logo = document.getElementById("admin-logo");
+  if (!logo) return;
+
+  let clicks = 0;
+  let resetTimer;
+
+  logo.addEventListener("click", function (event) {
+    event.preventDefault();
+    clicks++;
+    clearTimeout(resetTimer);
+
+    if (clicks >= 4) {
+      clicks = 0;
+      window.location.href = "admin.html";
+      return;
+    }
+
+    resetTimer = setTimeout(function () {
+      clicks = 0;
+    }, 2000);
+  });
+});
+</script>
+
 </body>
 </html>
