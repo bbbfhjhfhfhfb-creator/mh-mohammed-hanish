@@ -28,3 +28,12 @@ body{direction:rtl}input,textarea{direction:rtl}button{font-family:Tahoma,Arial,
  [class*="ToolbarSectionBackLink"]{grid-column:2!important;grid-row:1!important;width:100%!important;justify-content:flex-start!important}
  [class*="ToolbarSectionMeta"]{grid-column:1!important;grid-row:1!important;width:50px!important;overflow:hidden!important}
 }
+/* Visible action names replace tiny unlabeled glyphs in the pinned CMS. */
+.mh-delete-action,.mh-edit-action{width:auto!important;min-width:62px!important;height:34px!important;border-radius:6px!important;padding:4px 10px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:4px!important;font-size:13px!important;line-height:1.4!important}
+.mh-delete-action{color:#9b2020!important;background:#ffeded!important;border:1px solid #e5adad!important}
+.mh-edit-action{color:#463512!important;background:#fff5d8!important;border:1px solid #d7bf80!important}
+.mh-delete-action::after{content:'حذف'}
+.mh-edit-action::after{content:'تعديل'}
+.mh-delete-action>span,.mh-edit-action>span{display:none!important}
+[class*="AddButton"]{background:#dfbd58!important;color:#111!important;border:1px solid #b89532!important;padding:8px 15px!important;min-height:38px!important;border-radius:7px!important;font-size:14px!important}
+@media(max-width:700px){[class*="StyledListItemTopBar"]{min-height:40px!important}[class*="AddButton"]{max-width:100%!important;white-space:normal!important}.mh-delete-action,.mh-edit-action{min-width:58px!important;padding:4px 8px!important}}

@@ -3,7 +3,9 @@
   "private": true,
   "scripts": {
     "test": "node oauth/worker.test.js && node tests/content.cjs",
-    "test:browser": "node tests/browser.cjs"
+    "test:browser": "node tests/browser.cjs && node tests/actions.cjs"
   },
-  "devDependencies": { "playwright": "1.62.1" }
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
 }

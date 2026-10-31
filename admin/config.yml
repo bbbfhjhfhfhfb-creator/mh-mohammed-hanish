@@ -86,7 +86,8 @@
                         "max_file_size": 25000000
                       }
                     }
-                  }
+                  },
+                  "label_singular": "فيديو"
                 }
               ]
             },
@@ -140,7 +141,8 @@
                     "name": "text",
                     "label": "المجال",
                     "widget": "string"
-                  }
+                  },
+                  "label_singular": "مجال"
                 },
                 {
                   "name": "vision",
@@ -170,7 +172,8 @@
                   "widget": "text"
                 }
               ],
-              "allow_add": true
+              "allow_add": true,
+              "label_singular": "خدمة"
             },
             {
               "name": "categories",
@@ -192,7 +195,8 @@
                   "widget": "string"
                 }
               ],
-              "allow_add": true
+              "allow_add": true,
+              "label_singular": "تصنيف"
             },
             {
               "name": "works",
@@ -264,7 +268,8 @@
                   "default": true
                 }
               ],
-              "allow_add": true
+              "allow_add": true,
+              "label_singular": "عمل"
             },
             {
               "name": "whatsapp",
@@ -295,7 +300,8 @@
                   ]
                 }
               ],
-              "allow_add": true
+              "allow_add": true,
+              "label_singular": "رابط تواصل"
             }
           ]
         }
