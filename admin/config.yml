@@ -3,7 +3,7 @@
     "name": "github",
     "repo": "bbbfhjhfhfhfb-creator/mh-mohammed-hanish",
     "branch": "feature/arabic-admin",
-    "base_url": "https://oauth.example.invalid",
+    "base_url": "https://mh-admin-oauth.hmwdyalrayd0.workers.dev",
     "auth_endpoint": "auth",
     "commit_messages": {
       "create": "cms: create {{collection}} {{slug}}",

@@ -1,22 +1,27 @@
-# تفعيل خدمة الدخول للمرة الأولى
+# حالة الخدمة والخطوة المتبقية
 
-الخدمة مبرمجة في `worker.js` ومختبرة محليًا. لا يمكن نشرها دون الوصول إلى حساب Cloudflare وبيانات تطبيق GitHub OAuth. الرمز `1233` ليس بديلًا لهذه الخدمة ولا يسمح بالكتابة إلى المستودع.
+نُشرت خدمة `mh-admin-oauth` على Cloudflare، وفُعّل عنوانها:
+https://mh-admin-oauth.hmwdyalrayd0.workers.dev
 
-1. افتح [Cloudflare Workers](https://dash.cloudflare.com/) وسجّل الدخول إلى حسابك، ثم أنشئ Worker باسم `mh-admin-oauth`. الصق محتوى `worker.js` في محرر الشيفرة وانشره. احفظ رابط `https://mh-admin-oauth.<account>.workers.dev`. سيبقى الدخول معطلًا حتى إكمال المتغيرات.
-2. افتح [GitHub OAuth Apps](https://github.com/settings/developers) واختر New OAuth App. عيّن Homepage URL لرابط موقعك الفعلي، وAuthorization callback URL إلى رابط Worker متبوعًا بـ `/callback`. انسخ Client ID وولّد Client Secret.
-3. في Worker → Settings → Variables and Secrets أضف:
+ضُبطت `CMS_ORIGIN` و`ALLOWED_USERS` و`REPOSITORY`. لم تُضبط `CLIENT_ID` و`CLIENT_SECRET` بعد؛ تسجيل الدخول غير مفعّل لحين إعداد تطبيق GitHub OAuth. عُدّل عنوان الخدمة في فرع المراجعة فقط، ولم يُعدّل الموقع المنشور.
 
-| الاسم | النوع | القيمة |
-| --- | --- | --- |
-| `CLIENT_ID` | Text | Client ID من تطبيق GitHub |
-| `CLIENT_SECRET` | Secret | Client Secret؛ يُدخل هنا فقط |
-| `CMS_ORIGIN` | Text | أصل الموقع الفعلي، مثل `https://bbbfhjhfhfhfb-creator.github.io` دون مسار المشروع؛ تحقق من النطاق المستخدم |
-| `ALLOWED_USERS` | Text | اسم حساب المدير في GitHub، أو عدة أسماء مفصولة بفاصلة |
-| `REPOSITORY` | Text | `bbbfhjhfhfhfb-creator/mh-mohammed-hanish` |
+## إنشاء تطبيق GitHub OAuth
 
-4. احفظ وانشر إعدادات Worker. فتح `/health` يجب أن يرجع `{"ready":true}`. هذا يفحص وجود الإعدادات؛ نجاح الدخول الحقيقي هو الذي يثبت صلاحية بيانات OAuth.
-5. أرسل رابط Worker فقط، ورابط الموقع الفعلي واسم حساب المدير إذا اختلف عن مالك المستودع. لا ترسل Client Secret أو أي رمز وصول. بعدها يمكن تعيين `backend.base_url` في `admin/config.yml` إلى عنوان Worker، وإجراء اختبار الدخول والمراجعة.
+1. افتح https://github.com/settings/applications/new وسجّل الدخول إلى حساب GitHub الذي سيدير الموقع.
+2. املأ الحقول:
+   - Application name: `MH Admin`
+   - Homepage URL: `https://bbbfhjhfhfhfb-creator.github.io/mh-mohammed-hanish/`
+   - Authorization callback URL: `https://mh-admin-oauth.hmwdyalrayd0.workers.dev/callback`
+3. اضغط Register application. انسخ Client ID وولّد Client Secret.
+4. في Cloudflare → Workers & Pages → mh-admin-oauth → Settings → Variables and Secrets:
+   - أضف `CLIENT_ID` كمتغير Text.
+   - أضف `CLIENT_SECRET` كمتغير Secret. لا ترسله في المحادثة أو تضفه إلى ملفات GitHub.
+5. احفظ إعدادات Worker وانشرها. يعيد `/health` القيمة `{"ready":true}` عند اكتمال المتغيرات، ثم يلزم اختبار دخول حقيقي وتحقق من حساب المدير والمسودات.
 
-يجب حماية فرع الإنتاج بمراجعة PR. فرع CMS الحالي `feature/arabic-admin` متعمد للمراجعة؛ لا يغيّر الموقع المنشور. تفعيل الحفظ فيه يتطلب أن يكون الفرع موجودًا على GitHub. نقل مسار نشر المحتوى إلى الإنتاج يحتاج تعديل الفرع بعد الموافقة على الدمج والتحقق من قواعد الحماية.
+الخدمة تسمح حاليًا للحساب `bbbfhjhfhfhfb-creator` فقط، وتتحقق أيضًا من صلاحية الكتابة على المستودع. إذا كان حساب المدير مختلفًا، أرسل اسم الحساب فقط لتعديل قائمة `ALLOWED_USERS`.
 
-عند استخدام Wrangler بدل المحرر، نفذ من مجلد `oauth`: `npx wrangler login` ثم `npx wrangler deploy`، واضبط المتغيرات من إعدادات الخدمة. أدخل السر عبر `npx wrangler secret put CLIENT_SECRET` أو لوحة Cloudflare، لا في ملف TOML ولا في أوامر محفوظة في سجل الطرفية.
+## الحماية والمراجعة
+
+الرمز `1233` مدخل مخفي فقط وليس كلمة مرور. الكتابة إلى GitHub تتطلب مصادقة OAuth وصلاحيات المستودع. فرع CMS الحالي `feature/arabic-admin` للمراجعة؛ لا ينشر إلى `main`. لا تغيّر هذا الفرع قبل مراجعة الدمج وحماية فرع الإنتاج.
+
+لم يُنشأ تطبيق GitHub OAuth تلقائيًا: صلاحية GitHub للمستودع لا تتيح إنشاء OAuth Apps نيابة عن صاحب الحساب. لم تُطلب أو تُحفظ أي قيمة Client Secret في المحادثة أو المستودع.
