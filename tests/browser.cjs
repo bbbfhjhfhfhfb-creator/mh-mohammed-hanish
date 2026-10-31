@@ -30,6 +30,8 @@ const fs=require('node:fs');const assert=require('node:assert/strict');
   await page.setViewportSize({width:390,height:844});
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
   const box=await headline.boundingBox();assert.ok(box.x>=0 && box.x+box.width<=391,'mobile input must be inside viewport');
+  const saveBox=await page.getByRole('button',{name:'حفظ المسودة',exact:true}).boundingBox();
+  assert.ok(saveBox.x>=0 && saveBox.x+saveBox.width<=391,'mobile save button must be inside viewport');
   await page.getByRole('button',{name:'معاينة المسودة',exact:true}).click();
   assert.equal(await page.locator('#phone-preview').getAttribute('aria-pressed'),'true');
   await page.getByRole('button',{name:'العودة للتحرير',exact:true}).click();
