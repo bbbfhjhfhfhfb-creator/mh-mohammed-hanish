@@ -1,0 +1,8 @@
+name = "mh-admin-oauth"
+main = "worker.js"
+compatibility_date = "2026-10-01"
+# Set CLIENT_SECRET using `wrangler secret put CLIENT_SECRET`.
+# Set CLIENT_ID, CMS_ORIGIN (HTTPS origin only), ALLOWED_USERS (comma-separated
+# GitHub logins), and REPOSITORY as Worker variables in Cloudflare settings.
+# No credentials are committed here. The reviewed Worker is deployed.
+# Do not redeploy without preserving its configured bindings and secrets.

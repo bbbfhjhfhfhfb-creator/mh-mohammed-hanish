@@ -1,0 +1,298 @@
+{
+  "version": 1,
+  "hero": {
+    "cover": "assets/portrait-04.jpg",
+    "background": "assets/portrait.jpg",
+    "videos": [
+      "assets/cinematic-video-01.mp4",
+      "assets/cinematic-video-02.mp4"
+    ],
+    "headline": "نحوّل الأفكار إلى مشاهد تُحكى",
+    "intro": "علامة MH الإبداعية لصناعة الفيديو والتصوير والإنتاج المرئي؛ نحول الأفكار واللحظات إلى قصص تُروى بالصورة."
+  },
+  "about": {
+    "image": "assets/portrait.jpg",
+    "headings": [
+      "MH",
+      "Freelance Filmmaker & Video Creator",
+      "نحوّل الأفكار إلى مشاهد تُحكى",
+      "لنجعل فكرتك القادمة قصة تُروى"
+    ],
+    "paragraphs": [
+      "MH · من أنا",
+      "MH علامة إبداعية متخصصة في التصوير والإنتاج المرئي، وصناعة الفيديوهات الإعلانية والأفلام الوثائقية وتوثيق الأعراس والمناسبات. نقدم أعمالًا بصرية تجمع بين الإبداع الفني والجودة والهوية المميزة، لتحويل الأفكار واللحظات إلى قصص تُروى بالصورة.",
+      "هل لديك مشروع إعلاني، مناسبة مميزة، أو فكرة ترغب بتحويلها إلى عمل بصري احترافي؟",
+      "تواصل مع MH اليوم، ودعنا نبدأ بصناعة شيء مميز معًا.",
+      "للاستفسارات وحجز جلسات التصوير ومناقشة المشاريع، راسلنا عبر وسائل التواصل المتاحة بالموقع.",
+      "MH · Your Vision. Our Frame."
+    ],
+    "fields": [
+      "الإعلانات التجارية للمطاعم والمقاهي والمنتجات والمشاريع.",
+      "تصوير الأعراس والمناسبات بأسلوب فني وسينمائي.",
+      "إنتاج الأفلام الوثائقية وتوثيق القصص والمواهب.",
+      "تصوير المؤسسات والشركات والمشاريع.",
+      "صناعة المحتوى لمنصات التواصل الاجتماعي.",
+      "المونتاج وتصحيح الألوان والمعالجة السينمائية."
+    ],
+    "vision": "تقديم أعمال بصرية ذات هوية مميزة تجمع بين الإبداع والإحساس والاحترافية، وتترك أثرًا يتجاوز حدود الصورة."
+  },
+  "services": [
+    {
+      "icon": "✦",
+      "title": "الإعلانات التجارية",
+      "description": "إعلانات للمطاعم والمقاهي والمنتجات والمشاريع، بأسلوب بصري يجذب الانتباه."
+    },
+    {
+      "icon": "◎",
+      "title": "الأعراس والمناسبات",
+      "description": "تصوير وتوثيق اللحظات المهمة بأسلوب فني وسينمائي يحفظ تفاصيلها."
+    },
+    {
+      "icon": "▷",
+      "title": "الأفلام الوثائقية",
+      "description": "إنتاج أفلام توثّق القصص والمواهب والتجارب الإنسانية."
+    },
+    {
+      "icon": "▣",
+      "title": "تصوير المؤسسات والمشاريع",
+      "description": "إبراز هوية الشركات والمؤسسات والمشاريع من خلال صورة احترافية."
+    },
+    {
+      "icon": "◉",
+      "title": "محتوى منصات التواصل",
+      "description": "صناعة محتوى مرئي مناسب للمنصات الاجتماعية ولطبيعة الجمهور."
+    },
+    {
+      "icon": "◈",
+      "title": "المونتاج والمعالجة السينمائية",
+      "description": "مونتاج الفيديو، تصحيح الألوان، والمعالجة البصرية لإخراج متناسق ومميز."
+    }
+  ],
+  "categories": [
+    {
+      "id": "cinematic",
+      "label": "تصوير سينمائي"
+    },
+    {
+      "id": "video",
+      "label": "فيديو"
+    },
+    {
+      "id": "events",
+      "label": "فعاليات ومناسبات"
+    },
+    {
+      "id": "portrait",
+      "label": "بورتريه"
+    },
+    {
+      "id": "behind",
+      "label": "كواليس"
+    }
+  ],
+  "works": [
+    {
+      "title": "عمل فيديو جديد",
+      "label": "فيديو",
+      "category": "video",
+      "kind": "video",
+      "src": "assets/mh-work-video.mp4",
+      "poster": "assets/portrait-02.jpg",
+      "alt": "",
+      "visible": true
+    },
+    {
+      "title": "تصوير سينمائي ١",
+      "label": "تصوير سينمائي",
+      "category": "cinematic",
+      "kind": "video",
+      "src": "assets/cinematic-video-01.mp4",
+      "poster": "",
+      "alt": "",
+      "visible": true
+    },
+    {
+      "title": "تصوير سينمائي ٢",
+      "label": "تصوير سينمائي",
+      "category": "cinematic",
+      "kind": "video",
+      "src": "assets/cinematic-video-02.mp4",
+      "poster": "",
+      "alt": "",
+      "visible": true
+    },
+    {
+      "title": "تغطية مرئية ١",
+      "label": "فيديو",
+      "category": "video",
+      "kind": "video",
+      "src": "assets/event-video-01.mp4",
+      "poster": "assets/portrait-02.jpg",
+      "alt": "",
+      "visible": true
+    },
+    {
+      "title": "تغطية مرئية ٢",
+      "label": "فيديو",
+      "category": "video",
+      "kind": "video",
+      "src": "assets/event-video-02.mp4",
+      "poster": "assets/portrait-03.jpg",
+      "alt": "",
+      "visible": true
+    },
+    {
+      "title": "تغطية مرئية ٣",
+      "label": "فيديو",
+      "category": "video",
+      "kind": "video",
+      "src": "assets/event-video-03.mp4",
+      "poster": "assets/portrait-04.jpg",
+      "alt": "",
+      "visible": true
+    },
+    {
+      "title": "تغطية مرئية ٤",
+      "label": "فيديو",
+      "category": "video",
+      "kind": "video",
+      "src": "assets/event-video-04.mp4",
+      "poster": "assets/portrait-05.jpg",
+      "alt": "",
+      "visible": true
+    },
+    {
+      "title": "تغطية ميدانية ٥",
+      "label": "فيديو غير سينمائي",
+      "category": "video",
+      "kind": "video",
+      "src": "assets/event-video-05.mp4",
+      "poster": "assets/portrait-02.jpg",
+      "alt": "",
+      "visible": true
+    },
+    {
+      "title": "تغطية ميدانية ٦",
+      "label": "فيديو غير سينمائي",
+      "category": "video",
+      "kind": "video",
+      "src": "assets/event-video-06.mp4",
+      "poster": "assets/portrait-03.jpg",
+      "alt": "",
+      "visible": true
+    },
+    {
+      "title": "تغطية ميدانية ٧",
+      "label": "فيديو غير سينمائي",
+      "category": "video",
+      "kind": "video",
+      "src": "assets/event-video-07.mp4",
+      "poster": "assets/portrait-04.jpg",
+      "alt": "",
+      "visible": true
+    },
+    {
+      "title": "تغطية فعالية كلية طب الأسنان",
+      "label": "تصوير فعاليات",
+      "category": "events",
+      "kind": "image",
+      "src": "assets/dentistry-event.jpeg",
+      "poster": "",
+      "alt": "تغطية فعالية على مسرح كلية طب الأسنان",
+      "visible": true
+    },
+    {
+      "title": "كواليس صناعة الصورة",
+      "label": "تصوير سينمائي",
+      "category": "behind",
+      "kind": "image",
+      "src": "assets/behind-camera.jpg",
+      "poster": "",
+      "alt": "تصوير سينمائي خلف الكاميرا في موقع تصوير",
+      "visible": true
+    },
+    {
+      "title": "بورتريه كلاسيكي",
+      "label": "تصوير",
+      "category": "portrait",
+      "kind": "image",
+      "src": "assets/portrait-02.jpg",
+      "poster": "",
+      "alt": "صورة شخصية لمحمد حنش بالأبيض والأسود",
+      "visible": true
+    },
+    {
+      "title": "بورتريه فني",
+      "label": "تصوير",
+      "category": "portrait",
+      "kind": "image",
+      "src": "assets/portrait-03.jpg",
+      "poster": "",
+      "alt": "بورتريه فني لمحمد حنش",
+      "visible": true
+    },
+    {
+      "title": "أسلوب أبيض وأسود",
+      "label": "تصوير",
+      "category": "portrait",
+      "kind": "image",
+      "src": "assets/portrait-04.jpg",
+      "poster": "",
+      "alt": "صورة بورتريه بخلفية بيضاء",
+      "visible": true
+    },
+    {
+      "title": "لقطة سينمائية",
+      "label": "تصوير",
+      "category": "portrait",
+      "kind": "image",
+      "src": "assets/portrait-05.jpg",
+      "poster": "",
+      "alt": "صورة سينمائية لمحمد حنش مع الكاميرا",
+      "visible": true
+    },
+    {
+      "title": "المصور خلف الكاميرا",
+      "label": "تصوير",
+      "category": "portrait",
+      "kind": "image",
+      "src": "assets/portrait.jpg",
+      "poster": "",
+      "alt": "محمد حنش مع كاميرته",
+      "visible": true
+    },
+    {
+      "title": "تفاصيل بصرية",
+      "label": "تصوير",
+      "category": "portrait",
+      "kind": "image",
+      "src": "assets/portrait-02.jpg",
+      "poster": "",
+      "alt": "تفاصيل بورتريه أبيض وأسود",
+      "visible": true
+    }
+  ],
+  "whatsapp": "9647709639557",
+  "socials": [
+    {
+      "name": "Facebook",
+      "url": "https://www.facebook.com/share/1eeSHhBLBB/?mibextid=wwXIfr"
+    },
+    {
+      "name": "Instagram",
+      "url": "https://www.instagram.com/muhammad_hanash1/"
+    },
+    {
+      "name": "YouTube",
+      "url": "https://youtube.com/@mohammedhanash1"
+    },
+    {
+      "name": "TikTok",
+      "url": "https://www.tiktok.com/@pw_mo"
+    },
+    {
+      "name": "WhatsApp",
+      "url": "https://wa.me/9647709639557"
+    }
+  ]
+}
