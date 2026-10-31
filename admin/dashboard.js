@@ -18,5 +18,20 @@ async function checkFiles() {
   } catch { summary.textContent = 'تعذر تحميل قائمة الملفات. لم تُحذف أي مراجع.'; }
 }
 document.getElementById('refresh').addEventListener('click',checkFiles);checkFiles();
-fetch('config.yml').then(r=>r.json()).then(c=>{document.getElementById('setup').textContent = c.backend.base_url.includes('.invalid') ? 'تسجيل الدخول غير مفعّل: يلزم إعداد خدمة GitHub OAuth أولًا. يمكنك فحص الملفات الآن.' : 'تم تحديد خدمة تسجيل الدخول. تحقق من صلاحيات الحساب وحماية الفرع قبل الحفظ.';}).catch(()=>{document.getElementById('setup').textContent='تعذر قراءة إعدادات الدخول.';});
+async function checkLoginService() {
+  const status=document.getElementById('setup');
+  try {
+    const response=await fetch('config.yml',{cache:'no-cache'});
+    if(!response.ok) throw new Error();
+    const config=await response.json();
+    if(config.backend.base_url.includes('.invalid')) {
+      status.textContent='تسجيل الدخول غير مفعّل: يلزم إعداد خدمة GitHub OAuth أولًا. يمكنك فحص الملفات الآن.';
+      return;
+    }
+    const health=await fetch(new URL('/health',config.backend.base_url),{cache:'no-store',signal:AbortSignal.timeout(8000)});
+    const result=await health.json();
+    status.textContent=health.ok && result.ready === true ? 'خدمة تسجيل الدخول جاهزة. ادخل بحساب GitHub المصرح لحفظ المسودات.' : 'خدمة تسجيل الدخول لم تكتمل إعداداتها بعد. لم تُمنح صلاحية تعديل.';
+  } catch {status.textContent='تعذر التحقق من خدمة الدخول. افحص إعداد الخدمة والاتصال قبل حفظ أي تعديل.';}
+}
+checkLoginService();
 document.getElementById('open-editor').addEventListener('click',()=>{const host=document.getElementById('editor'); if(!host.firstChild){ const frame=document.createElement('iframe');frame.title='محرر MH';frame.src='editor.html';host.append(frame);}host.hidden=false;});

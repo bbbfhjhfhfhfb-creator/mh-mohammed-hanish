@@ -6,9 +6,14 @@ export default {
  async fetch(request, env) {
   const url = new URL(request.url);
   const configured = env.CLIENT_ID && env.CLIENT_SECRET && env.CMS_ORIGIN && env.ALLOWED_USERS && env.REPOSITORY;
-  if (!configured) return reply('OAuth service is not configured',503);
-  const origin = new URL(env.CMS_ORIGIN).origin;
-  if (!origin.startsWith('https://')) return reply('HTTPS origin required',503);
+  let origin;
+  try { origin = new URL(env.CMS_ORIGIN).origin; } catch { origin = ''; }
+  const ready = Boolean(configured && origin.startsWith('https://') && /^[\w.-]+\/[\w.-]+$/.test(env.REPOSITORY || '') && env.ALLOWED_USERS.split(',').some(s=>s.trim()));
+  if (url.pathname === '/health' && request.method === 'GET') {
+   const cors = origin && request.headers.get('Origin') === origin ? {'Access-Control-Allow-Origin':origin,'Vary':'Origin'} : {};
+   return reply(JSON.stringify({ready}),ready ? 200 : 503,{'Content-Type':'application/json',...cors});
+  }
+  if (!ready) return reply('OAuth service is not configured',503);
   if (url.pathname === '/auth') {
    if (request.method !== 'GET' || url.searchParams.get('provider') !== 'github') return reply('Unsupported request',400);
    const state = crypto.randomUUID() + crypto.randomUUID();

@@ -8,3 +8,25 @@ test('callback rejects forged or missing state',async()=>{for(const cookie of ['
 test('provider cannot redirect authorization to another service',async()=>assert.equal((await worker.fetch(new Request('https://oauth.example.com/auth?provider=evil'),env)).status,400));
 test('denies users outside administrator allowlist',async()=>{const old=globalThis.fetch;globalThis.fetch=async(url)=>Response.json(url.endsWith('access_token')?{access_token:'fake'}:{login:'intruder'});try{const r=await worker.fetch(new Request('https://oauth.example.com/callback?code=x&state=s',{headers:{Cookie:'__Host-mh-oauth=s'}}),env);assert.equal(r.status,403);assert.ok(!(await r.text()).includes('fake'))}finally{globalThis.fetch=old}});
 test('success posts token only to configured origin and clears state',async()=>{const old=globalThis.fetch;globalThis.fetch=async(url)=>Response.json(url.endsWith('access_token')?{access_token:'fake-token'}:url.endsWith('/user')?{login:'owner'}:{permissions:{push:true}});try{const r=await worker.fetch(new Request('https://oauth.example.com/callback?code=x&state=s',{headers:{Cookie:'__Host-mh-oauth=s'}}),env);const html=await r.text();assert.equal(r.status,200);assert.ok(html.includes('authorization:github:success:'));assert.ok(html.includes('event.origin!==target'));assert.ok(!html.includes('server-only'));assert.match(r.headers.get('set-cookie'),/Max-Age=0/);assert.match(r.headers.get('content-security-policy'),/frame-ancestors 'none'/)}finally{globalThis.fetch=old}});
+test('callback JavaScript executes the Decap handshake without corrupting tokens',async()=>{
+ const old=globalThis.fetch;const token='test<token';
+ globalThis.fetch=async(url)=>Response.json(url.endsWith('access_token')?{access_token:token}:url.endsWith('/user')?{login:'owner'}:{permissions:{push:true}});
+ try{
+  const r=await worker.fetch(new Request('https://oauth.example.com/callback?code=x&state=s',{headers:{Cookie:'__Host-mh-oauth=s'}}),env);
+  const html=await r.text();const match=html.match(/<script[^>]*>([\s\S]*?)<\/script>/);assert.ok(match,'response must contain a real closing script tag');
+  const sent=[];let listener;const opener={postMessage:(message,origin)=>sent.push({message,origin})};
+  const window={opener,addEventListener:(_,fn)=>listener=fn,removeEventListener:()=>{},close:()=>{}};
+  Function('window',match[1])(window);assert.equal(sent[0].message,'authorizing:github');
+  listener({origin:env.CMS_ORIGIN,source:opener});
+  assert.equal(JSON.parse(sent[1].message.slice('authorization:github:success:'.length)).token,token);
+  assert.equal(sent[1].origin,env.CMS_ORIGIN);
+ }finally{globalThis.fetch=old}
+});
+test('health reports readiness without disclosing configuration or secrets',async()=>{
+ for(const [config,status] of [[env,200],[{},503],[{...env,CMS_ORIGIN:'invalid'},503]]){
+  const r=await worker.fetch(new Request('https://oauth.example.com/health',{headers:{Origin:env.CMS_ORIGIN}}),config);
+  assert.equal(r.status,status);assert.deepEqual(await r.json(),{ready:status===200});
+ }
+ const r=await worker.fetch(new Request('https://oauth.example.com/health',{headers:{Origin:'https://evil.example'}}),env);
+ assert.equal(r.headers.get('access-control-allow-origin'),null);
+});
