@@ -1,0 +1,9 @@
+{
+  "name": "mh-portfolio-admin",
+  "private": true,
+  "scripts": {
+    "test": "node oauth/worker.test.js && node tests/content.cjs",
+    "test:browser": "node tests/browser.cjs"
+  },
+  "devDependencies": { "playwright": "1.62.1" }
+}

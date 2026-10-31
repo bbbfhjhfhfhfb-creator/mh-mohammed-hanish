@@ -1,0 +1,305 @@
+{
+  "backend": {
+    "name": "github",
+    "repo": "bbbfhjhfhfhfb-creator/mh-mohammed-hanish",
+    "branch": "feature/arabic-admin",
+    "base_url": "https://oauth.example.invalid",
+    "auth_endpoint": "auth",
+    "commit_messages": {
+      "create": "cms: create {{collection}} {{slug}}",
+      "update": "cms: update {{collection}} {{slug}}",
+      "delete": "cms: delete {{collection}} {{slug}}",
+      "uploadMedia": "cms: upload {{path}}",
+      "deleteMedia": "cms: delete {{path}}"
+    }
+  },
+  "locale": "ar",
+  "publish_mode": "editorial_workflow",
+  "media_folder": "assets",
+  "public_folder": "assets",
+  "display_url": "../",
+  "logo_url": "../assets/logo.png",
+  "collections": [
+    {
+      "name": "site",
+      "label": "إدارة موقع MH",
+      "files": [
+        {
+          "name": "settings",
+          "label": "المحتوى والإعدادات",
+          "file": "content/site.json",
+          "fields": [
+            {
+              "name": "version",
+              "label": "إصدار البيانات",
+              "widget": "hidden",
+              "default": 1
+            },
+            {
+              "name": "hero",
+              "label": "الواجهة الرئيسية",
+              "widget": "object",
+              "fields": [
+                {
+                  "name": "cover",
+                  "label": "صورة غلاف الفيديو",
+                  "widget": "file",
+                  "required": false,
+                  "media_library": {
+                    "config": {
+                      "max_file_size": 25000000
+                    }
+                  }
+                },
+                {
+                  "name": "background",
+                  "label": "صورة الخلفية",
+                  "widget": "file",
+                  "required": false,
+                  "media_library": {
+                    "config": {
+                      "max_file_size": 25000000
+                    }
+                  }
+                },
+                {
+                  "name": "headline",
+                  "label": "العنوان",
+                  "widget": "string"
+                },
+                {
+                  "name": "intro",
+                  "label": "المقدمة",
+                  "widget": "text"
+                },
+                {
+                  "name": "videos",
+                  "label": "فيديوهات الواجهة (ترتيب بالسحب)",
+                  "widget": "list",
+                  "field": {
+                    "name": "video",
+                    "label": "ملف الفيديو",
+                    "widget": "file",
+                    "required": false,
+                    "media_library": {
+                      "config": {
+                        "max_file_size": 25000000
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "about",
+              "label": "من أنا",
+              "widget": "object",
+              "fields": [
+                {
+                  "name": "image",
+                  "label": "الصورة",
+                  "widget": "file",
+                  "required": false,
+                  "media_library": {
+                    "config": {
+                      "max_file_size": 25000000
+                    }
+                  }
+                },
+                {
+                  "name": "headings",
+                  "label": "العناوين بالترتيب",
+                  "widget": "list",
+                  "field": {
+                    "name": "text",
+                    "label": "العنوان",
+                    "widget": "string"
+                  },
+                  "allow_add": false,
+                  "min": 4,
+                  "max": 4
+                },
+                {
+                  "name": "paragraphs",
+                  "label": "الفقرات بالترتيب",
+                  "widget": "list",
+                  "field": {
+                    "name": "text",
+                    "label": "النص",
+                    "widget": "text"
+                  },
+                  "allow_add": false,
+                  "min": 6,
+                  "max": 6
+                },
+                {
+                  "name": "fields",
+                  "label": "مجالات العمل",
+                  "widget": "list",
+                  "field": {
+                    "name": "text",
+                    "label": "المجال",
+                    "widget": "string"
+                  }
+                },
+                {
+                  "name": "vision",
+                  "label": "الرؤية",
+                  "widget": "text"
+                }
+              ]
+            },
+            {
+              "name": "services",
+              "label": "الخدمات",
+              "widget": "list",
+              "fields": [
+                {
+                  "name": "icon",
+                  "label": "الرمز",
+                  "widget": "string"
+                },
+                {
+                  "name": "title",
+                  "label": "العنوان",
+                  "widget": "string"
+                },
+                {
+                  "name": "description",
+                  "label": "الوصف",
+                  "widget": "text"
+                }
+              ],
+              "allow_add": true
+            },
+            {
+              "name": "categories",
+              "label": "التصنيفات",
+              "widget": "list",
+              "fields": [
+                {
+                  "name": "id",
+                  "label": "معرّف إنجليزي",
+                  "widget": "string",
+                  "pattern": [
+                    "^[a-z][a-z0-9-]*$",
+                    "استخدم حروفًا إنجليزية صغيرة وشرطات"
+                  ]
+                },
+                {
+                  "name": "label",
+                  "label": "الاسم بالعربية",
+                  "widget": "string"
+                }
+              ],
+              "allow_add": true
+            },
+            {
+              "name": "works",
+              "label": "الصور والفيديوهات — اسحب لتغيير الترتيب",
+              "widget": "list",
+              "fields": [
+                {
+                  "name": "title",
+                  "label": "العنوان",
+                  "widget": "string"
+                },
+                {
+                  "name": "label",
+                  "label": "الوصف المختصر",
+                  "widget": "string"
+                },
+                {
+                  "name": "category",
+                  "label": "معرّف التصنيف",
+                  "widget": "string"
+                },
+                {
+                  "name": "kind",
+                  "label": "نوع الملف",
+                  "widget": "select",
+                  "options": [
+                    {
+                      "label": "صورة",
+                      "value": "image"
+                    },
+                    {
+                      "label": "فيديو",
+                      "value": "video"
+                    }
+                  ]
+                },
+                {
+                  "name": "src",
+                  "label": "الصورة أو الفيديو",
+                  "widget": "file",
+                  "required": true,
+                  "media_library": {
+                    "config": {
+                      "max_file_size": 25000000
+                    }
+                  }
+                },
+                {
+                  "name": "poster",
+                  "label": "غلاف الفيديو",
+                  "widget": "file",
+                  "required": false,
+                  "media_library": {
+                    "config": {
+                      "max_file_size": 25000000
+                    }
+                  }
+                },
+                {
+                  "name": "alt",
+                  "label": "النص البديل",
+                  "widget": "string",
+                  "required": false
+                },
+                {
+                  "name": "visible",
+                  "label": "ظاهر في الموقع",
+                  "widget": "boolean",
+                  "default": true
+                }
+              ],
+              "allow_add": true
+            },
+            {
+              "name": "whatsapp",
+              "label": "رقم واتساب الدولي دون +",
+              "widget": "string",
+              "pattern": [
+                "^[1-9][0-9]{7,14}$",
+                "أدخل رقمًا دوليًا صحيحًا"
+              ]
+            },
+            {
+              "name": "socials",
+              "label": "روابط التواصل",
+              "widget": "list",
+              "fields": [
+                {
+                  "name": "name",
+                  "label": "اسم المنصة",
+                  "widget": "string"
+                },
+                {
+                  "name": "url",
+                  "label": "الرابط",
+                  "widget": "string",
+                  "pattern": [
+                    "^https://",
+                    "يجب استخدام HTTPS"
+                  ]
+                }
+              ],
+              "allow_add": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,7 +1,18 @@
 // MH | Mohammed Hanish — site interactions
-const WHATSAPP_NUMBER = "9647709639557";
+async function initializeSite() {
+let siteData;
+try {
+  if (window.MH_PREVIEW_DATA) siteData = window.MH_PREVIEW_DATA;
+  else {
+    const response = await fetch('content/site.json', {cache: 'no-cache'});
+    if (!response.ok) throw new Error('Content HTTP ' + response.status);
+    siteData = await response.json();
+  }
+  window.MHContent.render(siteData);
+} catch (error) { console.warn('تعذر تحميل المحتوى؛ تم الاحتفاظ بالموقع الأصلي.', error); }
+const WHATSAPP_NUMBER = siteData?.whatsapp || "9647709639557";
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
-const validNumber = /^9647\d{9}$/.test(WHATSAPP_NUMBER);
+const validNumber = /^[1-9]\d{7,14}$/.test(WHATSAPP_NUMBER);
 const defaultMessage = "مرحباً MH، أود الاستفسار عن خدمات التصوير ومونتاج الفيديو وطلب عرض سعر.";
 document.querySelectorAll(".whatsapp-link").forEach(link => {
   link.href = validNumber ? `${WHATSAPP_URL}?text=${encodeURIComponent(defaultMessage)}` : "#contact";
@@ -67,3 +78,6 @@ if (bookingForm) bookingForm.addEventListener("submit", event => {
     active = next;
   }, 9000);
 })();
+
+}
+initializeSite();

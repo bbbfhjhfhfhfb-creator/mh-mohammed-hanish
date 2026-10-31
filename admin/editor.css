@@ -1,0 +1,12 @@
+body{direction:rtl}input,textarea{direction:rtl}button{font-family:Tahoma,Arial,sans-serif!important}
+#phone-preview{display:none}
+@media(max-width:700px){
+ [class*="EditorContainer"],[class*="-Editor "]{min-width:0!important;width:100%!important;max-width:100vw!important}
+ .SplitPane{min-width:0!important;width:100%!important;direction:ltr}
+ .SplitPane .Pane1{width:100%!important;min-width:0!important;direction:rtl}
+ .SplitPane .Pane2,.SplitPane .Resizer{display:none!important}
+ [class*="ControlPaneContainer"]{min-width:0!important;width:100%!important;max-width:100%!important;padding:12px!important;margin:0!important}
+ body.phone-preview .SplitPane .Pane1{display:none!important}
+ body.phone-preview .SplitPane .Pane2{display:block!important;width:100%!important;min-width:0!important}
+ #phone-preview{display:block;position:fixed;bottom:12px;left:12px;z-index:9999;border:1px solid #d6b559;border-radius:25px;padding:12px 18px;background:#111;color:#f1d36d;font:14px Tahoma;box-shadow:0 3px 15px #0008;cursor:pointer}
+}

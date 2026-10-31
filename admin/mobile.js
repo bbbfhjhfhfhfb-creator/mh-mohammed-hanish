@@ -1,0 +1,1 @@
+document.getElementById('phone-preview').addEventListener('click',event=>{const preview=document.body.classList.toggle('phone-preview');event.currentTarget.textContent=preview?'العودة للتحرير':'معاينة المسودة';event.currentTarget.setAttribute('aria-pressed',String(preview));});
