@@ -1,6 +1,6 @@
 # لوحة MH — دليل التشغيل والمراجعة
 
-تم التنفيذ على `feature/arabic-admin`. لم يُدمج الفرع ولم يُنشر الموقع. نُشرت خدمة OAuth المستقلة، وما زالت تنتظر بيانات تطبيق GitHub. الصفحة الأصلية وجميع الملفات الأصلية محفوظة. يحتاج التشغيل الحقيقي إلى إعداد OAuth أدناه؛ ظهور شاشة الدخول لا يثبت نجاح تسجيل الدخول الحقيقي.
+تم التنفيذ على `feature/arabic-admin`. لم يُدمج الفرع ولم يُنشر الموقع. نُشرت خدمة OAuth المستقلة، وضُبطت بيانات تطبيق GitHub داخلها. الصفحة الأصلية وجميع الملفات الأصلية محفوظة. نجح فحص جاهزية OAuth والتحويل إلى GitHub؛ ما زال تسجيل الدخول الكامل وحفظ مسودة فعلية بحاجة إلى اختبار بحساب المدير.
 
 ## المعمارية
 
@@ -13,7 +13,7 @@
 ## إعداد الدخول الحقيقي — بعد المراجعة فقط
 
 1. في GitHub Settings → Developer settings → OAuth Apps أنشئ تطبيقًا. Homepage URL هو رابط الموقع، وAuthorization callback URL هو `https://<worker-host>/callback`. لا تضع Client Secret في المستودع أو المحادثة.
-2. أنشئ Worker من `oauth/worker.js` باستخدام Cloudflare Dashboard أو Wrangler. ملف `oauth/wrangler.toml` يحدد ملف الدخول. هذه خدمة خارج GitHub Pages وقد تحتاج حساب Cloudflare وفق حدود خطتك. أُنشئت ونُشرت، لكن بيانات تطبيق GitHub OAuth ما زالت مطلوبة.
+2. أنشئ Worker من `oauth/worker.js` باستخدام Cloudflare Dashboard أو Wrangler. ملف `oauth/wrangler.toml` يحدد ملف الدخول. هذه خدمة خارج GitHub Pages وقد تحتاج حساب Cloudflare وفق حدود خطتك. أُنشئت ونُشرت، وضُبطت فيها بيانات تطبيق GitHub OAuth.
 3. عرّف `CLIENT_ID` و`CMS_ORIGIN` (أصل HTTPS فقط، مثل `https://username.github.io`، دون مسار المشروع) و`ALLOWED_USERS` (أسماء حسابات GitHub مفصولة بفواصل) و`REPOSITORY=bbbfhjhfhfhfb-creator/mh-mohammed-hanish` في إعدادات Worker. ضع `CLIENT_SECRET` في Cloudflare Secrets، أو `wrangler secret put CLIENT_SECRET`. لا توجد قيم سرية تجريبية صالحة داخل الملفات.
 4. استبدل `backend.base_url` في `admin/config.yml` بعنوان Worker الفعلي. القيمة الحالية `https://mh-admin-oauth.hmwdyalrayd0.workers.dev` تشير إلى الخدمة المنشأة لهذا المشروع. `auth_endpoint` هو `auth`.
 5. امنع تعديلات الإنتاج المباشرة: احمِ فرع الإنتاج في GitHub بقواعد تتطلب Pull Request ومراجعة، دون تجاوز لحساب الإدارة. تحقق من إعدادات Pages الحالية قبل أي دمج. أبقِ `backend.branch=feature/arabic-admin` أثناء المراجعة؛ «النشر» داخل Decap يدمج مسودته إلى هذا الفرع فقط. لا تغيّره إلى فرع الإنتاج إلا بقرار منفصل بعد المراجعة وإعداد الحماية.
@@ -47,4 +47,4 @@
 
 انقر شعار أعلى الموقع خمس مرات متتابعة (بفاصل أقل من 1.8 ثانية بين النقرات)، ثم أدخل `1233` أو `١٢٣٣` واضغط «متابعة». الرمز يفتح مسار `/admin/` فقط، ولا يمنح صلاحية التعديل أو يتجاوز GitHub OAuth. الرمز ظاهر في الشيفرة العامة بحكم طبيعة GitHub Pages، وليس كلمة مرور. يبقى الوصول المباشر لمسار الإدارة ممكنًا، وتبقى الكتابة محمية بمصادقة GitHub وصلاحيات المستودع. يدعم المدخل الهاتف ولوحة المفاتيح؛ اضغط Enter على رابط الشعار خمس مرات. Escape أو «إلغاء» يغلقان النافذة دون تغيير الموقع.
 
-لخطوات GitHub OAuth الحالية وعنوان callback الفعلي، راجع [حالة الخدمة](../oauth/SETUP.ar.md).
+لحالة التحقق وخطوات GitHub OAuth وعنوان callback الفعلي، راجع [حالة الخدمة](../oauth/SETUP.ar.md).
