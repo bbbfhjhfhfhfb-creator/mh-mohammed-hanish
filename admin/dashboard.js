@@ -34,4 +34,4 @@ async function checkLoginService() {
   } catch {status.textContent='تعذر التحقق من خدمة الدخول. افحص إعداد الخدمة والاتصال قبل حفظ أي تعديل.';}
 }
 checkLoginService();
-document.getElementById('open-editor').addEventListener('click',()=>{const host=document.getElementById('editor'); if(!host.firstChild){ const frame=document.createElement('iframe');frame.title='محرر MH';frame.src='editor.html';host.append(frame);}host.hidden=false;});
+document.getElementById('open-editor').addEventListener('click',()=>{const host=document.getElementById('editor'); if(!host.firstChild){ const frame=document.createElement('iframe');frame.title='محرر MH';frame.src='editor.html#/collections/site/entries/settings';host.append(frame);}host.hidden=false;});
