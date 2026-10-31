@@ -34,6 +34,8 @@
     if (!dialog.open) { dialog.showModal(); dialog.querySelector('input').focus(); }
   }
   logo.addEventListener('click',event=>{
+    // Keep keyboard focus on the logo across repeated Enter presses.
+    if(event.detail===0){event.preventDefault();document.getElementById('home')?.scrollIntoView({behavior:'smooth'});}
     const now=Date.now();taps=now-lastTap<=1800?taps+1:1;lastTap=now;
     if(taps===5){event.preventDefault();taps=0;openEntry();}
   });
