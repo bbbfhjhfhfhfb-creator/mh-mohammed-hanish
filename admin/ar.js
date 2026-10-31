@@ -144,7 +144,7 @@ CMS.registerLocale("ar", {
     },
     "editorToolbar": {
       "publishing": "جارٍ النشر…",
-      "publish": "نشر إلى الفرع المحدد",
+      "publish": "نشر على الموقع",
       "published": "منشور",
       "unpublish": "إلغاء النشر",
       "duplicate": "نسخ",
@@ -168,7 +168,7 @@ CMS.registerLocale("ar", {
       "draft": "مسودة",
       "inReview": "قيد المراجعة",
       "ready": "جاهز",
-      "publishNow": "نشر الآن إلى الفرع",
+      "publishNow": "نشر الآن على الموقع",
       "deployPreviewPendingButtonLabel": "التحقق من المعاينة",
       "deployPreviewButtonLabel": "عرض المعاينة",
       "deployButtonLabel": "عرض الموقع"
@@ -342,7 +342,7 @@ CMS.registerLocale("ar", {
       "viewSite": "View",
       "viewEntry": "View entry",
       "viewBuildLog": "View build log",
-      "entryPublished": "تم النشر إلى الفرع",
+      "entryPublished": "تم النشر على الموقع",
       "entryUnpublished": "تم إلغاء النشر",
       "onFailToPublishEntry": "تعذر النشر: %{details}",
       "onFailToUnpublishEntry": "Failed to unpublish entry: %{details}",
@@ -376,13 +376,13 @@ CMS.registerLocale("ar", {
       "lastChangeNoDate": "by %{author}",
       "deleteChanges": "حذف التعديلات",
       "deleteNewEntry": "حذف المحتوى الجديد",
-      "publishChanges": "نشر التعديلات إلى الفرع",
-      "publishNewEntry": "نشر المحتوى إلى الفرع"
+      "publishChanges": "نشر التعديلات على الموقع",
+      "publishNewEntry": "نشر المحتوى على الموقع"
     },
     "workflowList": {
       "onDeleteEntry": "هل تريد حذف هذا المحتوى؟",
       "onPublishingNotReadyEntry": "انقل المحتوى إلى جاهز قبل النشر",
-      "onPublishEntry": "هل تريد النشر إلى الفرع المحدد؟",
+      "onPublishEntry": "هل تريد النشر على الموقع؟",
       "draftHeader": "المسودات",
       "inReviewHeader": "قيد المراجعة",
       "readyHeader": "جاهز",

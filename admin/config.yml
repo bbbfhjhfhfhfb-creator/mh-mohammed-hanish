@@ -2,7 +2,7 @@
   "backend": {
     "name": "github",
     "repo": "bbbfhjhfhfhfb-creator/mh-mohammed-hanish",
-    "branch": "feature/arabic-admin",
+    "branch": "main",
     "base_url": "https://mh-admin-oauth.hmwdyalrayd0.workers.dev",
     "auth_endpoint": "auth",
     "commit_messages": {
@@ -17,7 +17,7 @@
   "publish_mode": "editorial_workflow",
   "media_folder": "assets",
   "public_folder": "assets",
-  "display_url": "../",
+  "display_url": "https://bbbfhjhfhfhfb-creator.github.io/mh-mohammed-hanish/",
   "logo_url": "../assets/logo.png",
   "collections": [
     {
@@ -301,5 +301,6 @@
         }
       ]
     }
-  ]
+  ],
+  "site_url": "https://bbbfhjhfhfhfb-creator.github.io/mh-mohammed-hanish/"
 }
